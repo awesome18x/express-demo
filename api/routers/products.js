@@ -7,9 +7,22 @@ router.get('/', (req, res) => {
     Product.find()
         .exec()
         .then(products => {
+            const response = {
+                count: products.length,
+                products: products.map(product => {
+                    return {
+                        name: product.name,
+                        price: product.price,
+                        _id: product._id,
+                        request: {
+                            type: 'GET'
+                        }
+                    }
+                })
+            };
             return res.status(200).json({
                 msg: 'Successfully',
-                products: products
+                response
             });
         })
         .catch(error => {
