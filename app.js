@@ -7,6 +7,7 @@ const app = express();
 
 const productRoutes = require('./api/routers/products');
 const orderRoutes = require('./api/routers/orders');
+const userRouters = require('./api/routers/users');
 
 mongoose
     .connect('mongodb://localhost:27017/express-demo', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -39,6 +40,7 @@ app.get('/', (req, res, next) => {
 
 app.use('/product', productRoutes);
 app.use('/order', orderRoutes);
+app.use('/user', userRouters);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
