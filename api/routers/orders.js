@@ -4,9 +4,24 @@ const mongoose = require('mongoose');
 const Order = require('./../models/orders');
 
 router.get('/', (req, res, next) => {
-    res.status(201).json({
-        msg: 'Order availabel'
-    });
+    Order.find()
+        .populate('product')
+        .exec()
+        .then(orders => {
+            res.status(200).json({
+                count: orders.length,
+                Order: orders.map(order => {
+                    return {
+                        _id: order._id,
+                        product: order.product,
+                        quantity: order.quantity
+                    }
+                })
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        });
 });
 
 router.post('/', (req, res, next) => {
