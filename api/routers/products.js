@@ -61,39 +61,35 @@ router.get('/:productID', (req, res, next) => {
 
 });
 
-router.patch(':/productID', (req, res, next) => {
-    const id = req.params.productID;
+router.patch('/:productId', (req, res, next) => {
+    const id = req.params.productId;
     const updateOps = {};
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value;
     }
-    Product
-        .update({ _id: id }, { $set: updateOps })
+    Product.update({ _id: id }, { $set: updateOps })
         .exec()
-        .then(product => {
-            return res.status(200).json({
-                msg: 'Update successfully',
-                product: product
-            });
+        .then(result => {
+            res.status(200).json(result);
         })
-        .catch(error => {
-            console.log(error);
+        .catch(err => {
+            console.log(err);
             res.status(500).json({
-                msg: 'Have a error',
-                error: error
+                error: err
             });
         });
-    res.status(200).json({
-        msg: 'Product updated!'
-    });
 });
 
 router.delete(':/productID', (req, res, next) => {
     const id = req.params.productID;
-    Product.remove({ _id: id })
+    Product.findByIdAndRemove({ id })
         .exec()
-        .then()
-        .catch()
+        .then(product => {
+            console.log(product);
+        })
+        .catch(error => {
+            console.log('Error', error);
+        });
 });
 
 module.exports = router;
