@@ -10,7 +10,7 @@ const orderRoutes = require('./api/routers/orders');
 const userRouters = require('./api/routers/users');
 
 mongoose
-    .connect('mongodb://localhost:27017/express-demo', { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect('mongodb://localhost:27017/express-demo', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => {
         console.log('Ket noi toi Database OK!')
     })
