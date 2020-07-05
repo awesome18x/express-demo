@@ -36,10 +36,10 @@ router.post('/login', (req, res, next) => {
                         token: token
                     });
                 }
-            })
+            });
 
-        })
-})
+        });
+});
 
 router.post('/signup', (req, res, next) => {
     User.find({ email: req.body.email })
@@ -79,7 +79,7 @@ router.post('/signup', (req, res, next) => {
         })
         .catch(error => {
             console.log(error);
-        })
+        });
 });
 
 module.exports = router;
