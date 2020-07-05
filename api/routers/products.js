@@ -33,7 +33,12 @@ const upload = multer({
 const Product = require('./../models/products');
 
 router.get('/', checkAuth, (req, res) => {
+    const pageSize = +req.query.pageSize;
+    const pageIndex = +req.query.pageIndex;
     Product.find()
+        .skip((pageSize * pageIndex) - pageSize)
+        .limit(pageSize)
+        .sort('name')
         .exec()
         .then(products => {
             const response = {
