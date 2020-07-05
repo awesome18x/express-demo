@@ -1,8 +1,8 @@
 FROM node:12
 
-WORKDIR /app
+WORKDIR /express-demo
 
-RUN npm install -g contentful-cli
+RUN npm install -g node_modules
 
 COPY package.json .
 RUN npm install

@@ -129,15 +129,26 @@ router.patch('/:productId', checkAuth, (req, res, next) => {
         });
 });
 
-router.delete(':/productID', checkAuth, (req, res, next) => {
+router.delete('/:productID', checkAuth, (req, res, next) => {
     const id = req.params.productID;
-    Product.findByIdAndRemove({ id })
+    console.log(id);
+    Product.findOneAndRemove({ _id: id })
         .exec()
-        .then(product => {
-            console.log(product);
+        .then(result => {
+            res.status(200).json({
+                message: "Product deleted",
+                request: {
+                    type: "POST",
+                    url: "http://localhost:3000/products",
+                    body: { name: "String", price: "Number" }
+                }
+            });
         })
-        .catch(error => {
-            console.log('Error', error);
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
         });
 });
 
